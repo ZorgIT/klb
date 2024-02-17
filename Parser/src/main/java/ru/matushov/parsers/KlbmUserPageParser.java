@@ -1,17 +1,17 @@
-package ru.matushov;
+package ru.matushov.parsers;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import ru.matushov.DAO.klbmRaceData;
+import ru.matushov.DAO.KlbmRaceData;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class klbmUserParser {
-    public static List<klbmRaceData> parse(String url) {
+public class KlbmUserPageParser {
+    public static List<KlbmRaceData> parse(String url) {
 
-        List<klbmRaceData> raceDatas = new ArrayList<>();
+        List<KlbmRaceData> raceDatas = new ArrayList<>();
         try {
             var pageData = Jsoup.connect(url).userAgent("Chrome/121.0.6167.185")
                     .referrer("http://www.google.com")
@@ -28,7 +28,7 @@ public class klbmUserParser {
                 } else if (line.select("td:nth-child(2)").text().equals("")) {
                     continue;
                 }
-                klbmRaceData raceData = new klbmRaceData();
+                KlbmRaceData raceData = new KlbmRaceData();
                 //Извлекаем данные по каждому забегу
                 raceData.setDate(line.select("td:nth-child(2)").text() + " " + matchPeriod);
                 raceData.setEventName(line.select("td:nth-child(3) a").text());

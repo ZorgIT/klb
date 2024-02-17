@@ -1,8 +1,11 @@
 package ru.matushov;
 
+import ru.matushov.parsers.KlbmUserPageParser;
+
 public class Main {
     public static void main(String[] args) {
-        var pageData2 = klbmUserParser.parse("https://probeg.org/klb/person/9985/");
-        pageData2.forEach(System.out::println);
+//        var klbmUserPageData = KlbmUserPageParser.parse("https://probeg.org/klb/person/9985/");
+        var klbmUserPageData = KlbmUserPageParser.parse("https://probeg.org/klb/person/9046/");
+        klbmUserPageData.forEach(System.out::println);
     }
 }
