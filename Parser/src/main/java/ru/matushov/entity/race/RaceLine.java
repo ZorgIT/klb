@@ -1,4 +1,4 @@
-package ru.matushov.DAO;
+package ru.matushov.entity.race;
 
 
 import java.util.Date;
