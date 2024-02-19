@@ -3,15 +3,15 @@ package ru.matushov.parsers;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import ru.matushov.entity.race.KlbmRacesData;
+import ru.matushov.entity.race.KlbmImpl;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class KlbmUserPageParser {
-    public static List<KlbmRacesData> parse(String url) {
+    public static List<KlbmImpl> parse(String url) {
 
-        List<KlbmRacesData> racesData = new ArrayList<>();
+        List<KlbmImpl> racesData = new ArrayList<>();
         try {
             var pageData = Jsoup.connect(url).userAgent("Chrome/121.0.6167.185")
                     .referrer("http://www.google.com")
@@ -26,8 +26,8 @@ public class KlbmUserPageParser {
         return racesData;
     }
 
-    private static List<KlbmRacesData> processTable(Elements lines) {
-        List<KlbmRacesData> racesData = new ArrayList<>();
+    private static List<KlbmImpl> processTable(Elements lines) {
+        List<KlbmImpl> racesData = new ArrayList<>();
         String matchPeriod = ""; // Переменная для хранения текущего года при парсинге
         for (Element line : lines) {
             // проверка на год или шапку таблицы
@@ -37,7 +37,7 @@ public class KlbmUserPageParser {
             } else if (line.select("td:nth-child(2)").text().equals("")) {
                 continue;
             }
-            KlbmRacesData raceData = new KlbmRacesData();
+            KlbmImpl raceData = new KlbmImpl();
             //Извлекаем данные по каждому забегу
             raceData.setDate(line.select("td:nth-child(2)").text() + " " + matchPeriod);
             raceData.setEventName(line.select("td:nth-child(3) a").text());
@@ -51,3 +51,18 @@ public class KlbmUserPageParser {
         return racesData;
     }
 }
+
+
+/*
+Document doc = Jsoup.connect(url).get()  парсить с жестокго диска - .parse(File())
+
+Element  fff = postDetailsDoc.getElementsByClass ("classname").first().child()
+//first - первый элемент, child - на сколько дочерних элементов спуститься вниз
+далее с fff елемента можно снять аттрибуты - .txt илил .href.
+
+Elements ffa = doc.select("a"); -получить все ссылки на странице
+Elements ffa = doc.select("a.classname"); -получить все ссылки на странице с определенным классом
+(#навание) - по id
+foreach Elements - перебирать элементы
+    element.attr("href") - каждая ссылка
+ */

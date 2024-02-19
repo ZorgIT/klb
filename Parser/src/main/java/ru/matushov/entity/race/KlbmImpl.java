@@ -6,7 +6,7 @@ import ru.matushov.parsers.Utils;
 import java.util.Date;
 
 @Data
-public class KlbmRacesData implements RaceLine {
+public class KlbmImpl implements RaceLine {
     Date date;
     String eventName;
     String city;
@@ -14,6 +14,7 @@ public class KlbmRacesData implements RaceLine {
     String result;
     String points;
     String bonuses;
+    Integer idBonusOwner; //клуб которому присвоены балы
 
     public void setDate(String txt) {
         this.date = Utils.parseDate(txt);

@@ -17,5 +17,6 @@ public interface RaceLine {
     String getPoints();
 
     String getBonuses();
+    Integer getIdBonusOwner(); //id клуба в матче которому присвоены балы
 
 }
