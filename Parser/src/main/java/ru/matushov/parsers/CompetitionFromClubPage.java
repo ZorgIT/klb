@@ -23,7 +23,6 @@ public class CompetitionFromClubPage {
             System.err.println("Ошибка парсинга данных со страницы:" + publicClubPage);
             e.printStackTrace();
         }
-
         return competitions;
 
     }
@@ -49,11 +48,3 @@ public class CompetitionFromClubPage {
         return competitions;
     }
 }
-
-/*
-    Integer clubPageId;
-    String startYear;
-    String endYear;
-    Integer runnerCount;
-    String totalPoints;
- */

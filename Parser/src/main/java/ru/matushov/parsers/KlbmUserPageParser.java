@@ -53,16 +53,3 @@ public class KlbmUserPageParser {
 }
 
 
-/*
-Document doc = Jsoup.connect(url).get()  парсить с жестокго диска - .parse(File())
-
-Element  fff = postDetailsDoc.getElementsByClass ("classname").first().child()
-//first - первый элемент, child - на сколько дочерних элементов спуститься вниз
-далее с fff елемента можно снять аттрибуты - .txt илил .href.
-
-Elements ffa = doc.select("a"); -получить все ссылки на странице
-Elements ffa = doc.select("a.classname"); -получить все ссылки на странице с определенным классом
-(#навание) - по id
-foreach Elements - перебирать элементы
-    element.attr("href") - каждая ссылка
- */
