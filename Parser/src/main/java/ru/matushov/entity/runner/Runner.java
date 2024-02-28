@@ -7,4 +7,5 @@ public interface Runner {
     String getLastname();
     String getSurname();
     String getBirthday();
+    String getPersonalPage();
 }

@@ -8,6 +8,9 @@ import ru.matushov.entity.race.KlbmImpl;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+page example https://probeg.org/klb/person/8219/
+ */
 public class KlbmUserPageParser {
     public static List<KlbmImpl> parse(String url) {
 

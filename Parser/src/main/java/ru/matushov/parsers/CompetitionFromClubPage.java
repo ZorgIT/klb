@@ -8,6 +8,9 @@ import ru.matushov.entity.competition.CompetitionImpl;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+page example https://probeg.org/club/208/
+ */
 public class CompetitionFromClubPage {
     public static List parse(String publicClubPage) {
         List<CompetitionImpl> competitions = new ArrayList<>();
