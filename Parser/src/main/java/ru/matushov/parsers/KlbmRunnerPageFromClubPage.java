@@ -32,7 +32,7 @@ public class KlbmRunnerPageFromClubPage {
         List<KlbRunner> runners = new ArrayList<>();
         for (Element line : lines) {
             // проверка на год или шапку таблицы
-            if (!line.getElementsByClass("info").isEmpty()) {
+            if (!line.getElementsByClass("info").isEmpty() || line.childNodeSize() > 7) {
                 continue;
             }
             KlbRunner runner = new KlbRunner();
@@ -41,17 +41,16 @@ public class KlbmRunnerPageFromClubPage {
                     "^=/klb/person/]").attr("href")));
 
             String personal = line.select("a[href^=/user/]").attr("href");
-            runner.setPersonalPage("https://probeg.org" + personal);
+            if (personal.length() > 3) {
+                runner.setPersonalPage("https://probeg.org" + personal);
+            }
             runner.setBirthday((line.select("td:nth-child(3)").text()));
-            /*
-            runner.setDate(line.select("td:nth-child(2)").text() + " " + matchPeriod);
-            runner.setEventName(line.select("td:nth-child(3) a").text());
-            runner.setCity(line.select("td:nth-child(4)").text());
-            runner.setDistance(line.select("td:nth-child(5) a").text());
-            runner.setResult(line.select("td:nth-child(6)").text());
-            runner.setPoints(line.select("td:nth-child(7)").text());
-            runner.setBonuses(line.select("td:nth-child(8)").text());
-            */
+
+            String[] name = (line.select("td:nth-child(2)").text()).split(" ");
+            if (name.length > 1) {
+                runner.setFirstname(name[1]);
+                runner.setLastname(name[0]);
+            }
             runners.add(runner);
         }
         return runners;

@@ -10,4 +10,16 @@ public class KlbRunner implements Runner {
     String birthday;
     String personalPage;
     String klbmPage;
+
+    @Override
+    public String toString() {
+        return "KlbRunner{" +
+                "firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", surname='" + surname + '\'' +
+                ", birthday='" + birthday + '\'' +
+                ", personalPage='" + personalPage + '\'' +
+                ", klbmPage='" + klbmPage + '\'' +
+                '}' + "\n";
+    }
 }
