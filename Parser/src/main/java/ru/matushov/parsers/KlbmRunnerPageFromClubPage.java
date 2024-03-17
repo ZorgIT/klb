@@ -13,13 +13,17 @@ import java.util.List;
 import java.util.Optional;
 
 /*
+пример разбираемой страницы - вытаскивает таблицу бегунов из соревнования
 https://probeg.org/klb/team/1359/
  */
 public class KlbmRunnerPageFromClubPage {
     public static List<KlbRunner> parse(Document klbmTeam) {
         List<KlbRunner> runners = new ArrayList<>();
         try {
-            Elements lines = klbmTeam.select("table.table.table-condensed.table-hover tr");
+//            Elements lines = klbmTeam.select("table.table.table-condensed.table-hover tr");
+            Element table = klbmTeam.selectFirst("div.col-md-5");
+            Elements lines = table.select("table.table.table-condensed" +
+                    ".table-hover tr");
             runners = processTable(lines);
         } catch (Exception e) {
             System.err.println("Ошибка парсинга данных со страницы:");
@@ -31,8 +35,8 @@ public class KlbmRunnerPageFromClubPage {
     private static List<KlbRunner> processTable(Elements lines) {
         List<KlbRunner> runners = new ArrayList<>();
         for (Element line : lines) {
-            // проверка на год или шапку таблицы
-            if (!line.getElementsByClass("info").isEmpty() || line.childNodeSize() > 7) {
+            // проверка на шапку
+            if (!line.getElementsByClass("info").isEmpty()) {
                 continue;
             }
             KlbRunner runner = new KlbRunner();

@@ -1,5 +1,6 @@
 package ru.matushov.entity.club;
 
+import ru.matushov.entity.competition.CompetitionImpl;
 import ru.matushov.entity.competition.Event;
 
 import java.util.List;
@@ -13,5 +14,5 @@ public interface Club {
 
     String getBased();
 
-    List<Event> getCompetitions();
+    List getCompetitions();
 }

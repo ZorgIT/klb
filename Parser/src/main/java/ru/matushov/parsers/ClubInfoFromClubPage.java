@@ -9,7 +9,7 @@ import ru.matushov.entity.club.ClubImpl;
 page example https://probeg.org/club/208/
  */
 public class ClubInfoFromClubPage {
-    public static Club parse(Document clubPage) {
+    public static ClubImpl parse(Document clubPage) {
         ClubImpl club = new ClubImpl();
         try {
             club.setName(clubPage.getElementsByTag("h3").first().text());

@@ -1,5 +1,9 @@
 package ru.matushov.parsers;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -27,5 +31,18 @@ public class Utils {
             System.err.println("Ошибка парсинга даты: " + e.getMessage());
         }
         return null;
+    }
+
+    public static Document getDoc(String url) {
+        Document document = null;
+        try {
+            document = Jsoup.connect(url)
+                    .userAgent("Chrome/121.0.6167.185")
+                    .referrer("http://www.google.com")
+                    .get();
+        } catch (IOException e) {
+            System.err.println("Ошибка парсинга" + url);
+        }
+        return document;
     }
 }

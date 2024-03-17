@@ -1,6 +1,7 @@
 package ru.matushov.parsers;
 
 import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import ru.matushov.entity.competition.CompetitionImpl;
@@ -12,18 +13,14 @@ import java.util.List;
 page example https://probeg.org/club/208/
  */
 public class CompetitionFromClubPage {
-    public static List parse(String publicClubPage) {
+    public static List parse(Document clubPage) {
         List<CompetitionImpl> competitions = new ArrayList<>();
         try {
-            var pageData = Jsoup.connect(publicClubPage)
-                    .userAgent("Chrome/121.0.6167.185")
-                    .referrer("http://www.google.com")
-                    .get();
-            Elements lines = pageData.select("table.table.table-condensed.table-hover tr");
+            Elements lines = clubPage.select("table.table.table-condensed.table-hover tr");
             competitions = processTable(lines);
 
         } catch (Exception e) {
-            System.err.println("Ошибка парсинга данных со страницы:" + publicClubPage);
+            System.err.println("Ошибка парсинга данных со страницы:" + clubPage);
             e.printStackTrace();
         }
         return competitions;
@@ -47,7 +44,6 @@ public class CompetitionFromClubPage {
             event.setPeriod(matchPeriod);
             competitions.add(event);
         }
-
         return competitions;
     }
 }
