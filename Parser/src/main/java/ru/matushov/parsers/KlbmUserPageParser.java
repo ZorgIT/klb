@@ -1,6 +1,7 @@
 package ru.matushov.parsers;
 
 import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import ru.matushov.entity.race.KlbmImpl;
@@ -12,21 +13,27 @@ import java.util.List;
 page example https://probeg.org/klb/person/8219/
  */
 public class KlbmUserPageParser {
-    public static List<KlbmImpl> parse(String url) {
+    public static List<KlbmImpl> parse(Document klbRunner) {
 
         List<KlbmImpl> racesData = new ArrayList<>();
         try {
-            var pageData = Jsoup.connect(url).userAgent("Chrome/121.0.6167.185")
-                    .referrer("http://www.google.com")
-                    .get();
-            // Парсим страницу на таблицу с забегами
-            Elements lines = pageData.select("table.table.table-condensed.table-hover tr");
+            Elements lines = klbRunner.select("table.table.table-condensed.table-hover tr");
             racesData = processTable(lines);
         } catch (Exception e) {
-            System.err.println("Ошибка парсинга данных со страницы:" + url);
+            System.err.println("Ошибка парсинга данных со страницы:" + klbRunner.baseUri());
             e.printStackTrace();
         }
         return racesData;
+    }
+
+    public static String parseSurname(Document klbRunner) {
+        klbRunner.getElementsByClass("col-md-12").first().text();
+        //TODO finalize method
+        String surname =
+                klbRunner.getElementsByClass("col-md-12").first().child(1).text();
+
+        return surname;
+
     }
 
     private static List<KlbmImpl> processTable(Elements lines) {

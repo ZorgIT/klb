@@ -20,7 +20,6 @@ public class KlbmRunnerPageFromClubPage {
     public static List<KlbRunner> parse(Document klbmTeam) {
         List<KlbRunner> runners = new ArrayList<>();
         try {
-//            Elements lines = klbmTeam.select("table.table.table-condensed.table-hover tr");
             Element table = klbmTeam.selectFirst("div.col-md-5");
             Elements lines = table.select("table.table.table-condensed" +
                     ".table-hover tr");

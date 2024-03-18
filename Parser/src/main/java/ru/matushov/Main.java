@@ -7,6 +7,7 @@ import ru.matushov.entity.club.ClubImpl;
 import ru.matushov.entity.competition.CompetitionImpl;
 import ru.matushov.entity.competition.Event;
 import ru.matushov.entity.runner.KlbRunner;
+import ru.matushov.entity.runner.Runner;
 import ru.matushov.parsers.ClubInfoFromClubPage;
 import ru.matushov.parsers.CompetitionFromClubPage;
 import ru.matushov.parsers.KlbmRunnerPageFromClubPage;
@@ -14,6 +15,7 @@ import ru.matushov.parsers.KlbmUserPageParser;
 
 import java.io.IOException;
 import java.sql.SQLOutput;
+import java.util.HashSet;
 import java.util.List;
 
 import static ru.matushov.parsers.Utils.getDoc;
@@ -41,15 +43,31 @@ public class Main {
 
         ClubImpl club = ClubInfoFromClubPage.parse(clubMainPage);
         club.setCompetitions(CompetitionFromClubPage.parse(clubMainPage));
+
+        HashSet<KlbRunner> runnersList = new HashSet<>();
         for (CompetitionImpl event : club.getCompetitions()) {
             String klbmURL = event.getClubPageURL();//каждый матч
             Document klbmcur = getDoc(klbmURL);
             List<KlbRunner> runners =
                     KlbmRunnerPageFromClubPage.parse(klbmcur);
+            runnersList.addAll(runners);
             event.setRunners(runners);
         }
+        int limitter = 0;
+        for (KlbRunner runner : runnersList) {
+            Document runnerPage = getDoc(runner.getKlbmPage());
+            runner.setKlmbRaces(KlbmUserPageParser.parse(runnerPage));
+            runner.setSurname(KlbmUserPageParser.parseSurname(runnerPage));
 
+            if (limitter > 3) {
+                break;
+            }
+            limitter++;
+        }
         System.out.println(club.toString());
+
+        System.out.println("Total runner count" + runnersList.size());
+        runnersList.forEach(System.out::println);
     }
 }
 
